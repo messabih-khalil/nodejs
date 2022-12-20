@@ -16,7 +16,7 @@ const generatePosts = () => {
   let htmlBody = ``;
   serilizeData().forEach(e => {
     htmlBody += `
-    <a href="/${e.id}">
+    <a href="/product?id=${e.id}">
     <ol>
     <li>User Id : ${e.userId}</li>
     <li>Id : ${e.id}</li>
@@ -35,14 +35,44 @@ const generatePosts = () => {
   return htmlBody;
 };
 
+const getPostDetails = id => {
+  let htmlBody;
+  serilizeData().forEach(e => {
+    if (parseInt(e.id) == parseInt(id)) {
+      htmlBody = `
+      <a href="/product?id=${e.id}">
+      <ol>
+      <li>User Id : ${e.userId}</li>
+      <li>Id : ${e.id}</li>
+      <li>
+        Title : ${e.id}
+      </li>
+      <li>
+        body : ${e.body}
+      </li>
+    </ol>
+      </a>
+    <hr/>
+      `;
+    }
+  });
+
+  return htmlBody;
+};
+
 // create server
 
 const server = http.createServer((req, res) => {
-  switch (req.url) {
+  const { query, pathname } = url.parse(req.url, true);
+  switch (pathname) {
     case "/api":
-      const data = getData();
       res.writeHead(200, { "Content-type": "text/html" });
       res.end(generatePosts());
+
+      break;
+    case "/product":
+      res.writeHead(200, { "Content-type": "text/html" });
+      res.end(getPostDetails(query.id));
 
       break;
 
