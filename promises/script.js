@@ -5,7 +5,7 @@ const superAgent = require("superagent");
 
 const readFilePromise = file => {
   return new Promise((resolve, reject) => {
-    fs.readFile(file, (err, data) => {
+    fs.readFile(file, "utf-8", (err, data) => {
       if (err) reject("i could not find the file");
       resolve(data);
     });
@@ -24,3 +24,26 @@ const apiDataPromise = endpoint => {
       });
   });
 };
+// writing in new file
+const writingInFilePromise = message => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(`${__dirname}/response.txt`, message, err => {
+      reject("Writing filled");
+    });
+    resolve();
+  });
+};
+
+// consuming promises
+
+readFilePromise(`${__dirname}/file.txt`).then(data => {
+  apiDataPromise(data).then(data => {
+    writingInFilePromise(data.body.message)
+      .then(msg => {
+        console.log("Write Succed :)");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+});
