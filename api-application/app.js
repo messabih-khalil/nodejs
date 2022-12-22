@@ -51,9 +51,9 @@ const getOneProduct = (req, res) => {
 };
 
 // routes
-app.get("/api/v1/products", getAllProducts);
-app.post("/api/v1/products", addProduct);
-app.get("/api/v1/products/:id", getOneProduct);
+// app.get("/api/v1/products/:id", getOneProduct);
+
+app.route("/api/v1/products").get(getAllProducts).post(addProduct);
 // server
 
 app.listen(8000, "localhost", () => {
