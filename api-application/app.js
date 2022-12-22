@@ -15,15 +15,15 @@ const writeInJson = data => {
   });
 };
 
-app.get("/api/v1/products", (req, res) => {
+const getAllProducts = (req, res) => {
   res.status(200).json({
     status: "success",
     result: data.length,
     data: data,
   });
-});
+};
 
-app.post("/api/v1/products", (req, res) => {
+const addProduct = (req, res) => {
   const id = data.length + 1;
   const dataObject = Object.assign({ id: id }, req.body);
   data.push(dataObject);
@@ -37,9 +37,9 @@ app.post("/api/v1/products", (req, res) => {
     .catch(err => {
       console.log(err);
     });
-});
+};
 
-app.get("/api/v1/products/:id", (req, res) => {
+const getOneProduct = (req, res) => {
   const product = data[parseInt(req.params.id) - 1];
 
   res.status(200).json({
@@ -48,7 +48,12 @@ app.get("/api/v1/products/:id", (req, res) => {
       product,
     },
   });
-});
+};
+
+// routes
+app.get("/api/v1/products", getAllProducts);
+app.post("/api/v1/products", addProduct);
+app.get("/api/v1/products/:id", getOneProduct);
 // server
 
 app.listen(8000, "localhost", () => {
