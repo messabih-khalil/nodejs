@@ -4,6 +4,11 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log("From Middleware ^_^");
+  next();
+});
+
 const data = JSON.parse(fs.readFileSync("./data/data.json"));
 
 const writeInJson = data => {
@@ -56,6 +61,6 @@ const getOneProduct = (req, res) => {
 app.route("/api/v1/products").get(getAllProducts).post(addProduct);
 // server
 
-app.listen(8000, "localhost", () => {
+app.listen(8080, "localhost", () => {
   console.log("Server Running ...");
 });
