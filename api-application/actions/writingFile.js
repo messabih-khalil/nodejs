@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const writeInJson = (file, data) => {
+exports.writeInJson = (file, data) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(`./data/${file}.json`, data, err => {
       reject(err);
@@ -8,5 +8,3 @@ const writeInJson = (file, data) => {
     resolve(data);
   });
 };
-
-module.exports = writeInJson;

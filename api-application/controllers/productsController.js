@@ -3,6 +3,8 @@ const { writeInJson } = require("../actions/writingFile");
 
 const data = JSON.parse(fs.readFileSync("./data/data.json"));
 
+
+
 exports.getAllProducts = (req, res) => {
   res.status(200).json({
     status: "success",
